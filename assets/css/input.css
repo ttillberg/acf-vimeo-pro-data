@@ -1,0 +1,52 @@
+.acf-vimeo-pro-data a.refresh {
+	cursor: hand;
+}
+
+.acf-field-vimeo-pro-data a.remove {
+	color: red;
+	display: none;
+}
+
+.acf-field-vimeo-pro-data.has-data a.remove {
+	display: block;
+}
+
+
+.acf-field-vimeo-pro-data.warning .acf-vimeo-pro-data-message {
+		color: red;
+}
+
+.acf-vimeo-pro-data .acf-vimeo-pro-data-message {
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+.acf-vimeo-pro-data input {
+	max-width: 120px;
+}
+
+
+.acf-vimeo-pro-data-display {
+	display: none;
+	margin: 10px 0;
+	width: auto;
+	border: 1px solid #999;
+	padding: 10px;
+}
+
+.acf-vimeo-pro-data-display .video-info {
+	font-size: 8px;
+	line-height: 1.5em;
+}
+
+.acf-field-vimeo-pro-data.has-data .acf-vimeo-pro-data-display {
+	display: inline-block;
+}
+
+.acf-vimeo-pro-data-display.error {
+	color: red;
+}
+.acf-vimeo-pro-data-display h4 {
+	white-space: nowrap;
+	margin: 0;
+}
