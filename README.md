@@ -2,6 +2,8 @@
 
 Retrieves video sources and other video related data from Vimeo Pro account.
 
+![image](https://user-images.githubusercontent.com/557990/29169856-72886530-7dd6-11e7-97ad-f3363d3183ec.png)
+
 ### Compatibility
 
 This ACF field type is compatible with:
