@@ -93,9 +93,10 @@
 			list.push("<div class='video-info'>")
       list.push("<h4>" + data.name + "</h4>")
 			list.push(data.width + "x" + data.height + " / " + toMMSS(data.duration))
+			list.push("<br />");
 			list.push(data.files.map(function(o){ return (o.height ? o.height + 'p ' : '') + (o.quality || "NA").toUpperCase() }).join(', '))
 			list.push("</div>");
-			var html = list.join('<br/>')
+			var html = list.join('')
 			$display.html(html)
 		}
 
