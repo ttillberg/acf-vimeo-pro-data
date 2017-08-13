@@ -88,7 +88,7 @@
 			var list = [];
 
       list.push("<div class='acf-vimeo-data-display-preview'>")
-			list.push("<img src='" + data.pictures.sizes[2] . link + "' />")
+			list.push("<a href='"+ data.link +"' target='_blank'><img src='" + data.pictures.sizes[2].link + "' /></a>")
       list.push("</div>");
 			list.push("<div class='video-info'>")
       list.push("<h4>" + data.name + "</h4>")
