@@ -92,7 +92,7 @@
       list.push("</div>");
 			list.push("<div class='video-info'>")
       list.push("<h4>" + data.name + "</h4>")
-			list.push(data.width + "x" + data.height + "/" + data.time)
+			list.push(data.width + "x" + data.height + " / " + toMMSS(data.duration))
 			list.push(data.files.map(function(o){ return (o.height ? o.height + 'p ' : '') + (o.quality || "NA").toUpperCase() }).join(', '))
 			list.push("</div>");
 			var html = list.join('<br/>')
@@ -120,6 +120,20 @@
 		function setData(data) {
 			var str = JSON.stringify(data)
 			$input.val(str);
+		}
+
+		function toMMSS(value) {
+
+			var sec_num = parseInt(value, 10); // don't forget the second param
+			var hours   = Math.floor(sec_num / 3600);
+			var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+			var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+			if (hours   < 10) {hours   = "0" + hours;}
+			if (minutes < 10) {minutes = "0" + minutes;}
+			if (seconds < 10) {seconds = "0" + seconds;}
+
+			return minutes + '\'' + seconds + '"';
 		}
 	}
 
