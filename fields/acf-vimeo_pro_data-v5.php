@@ -151,7 +151,7 @@ class acf_field_vimeo_pro_data extends acf_field {
 		?>
 		<div class="acf-vimeo-pro-data">
 			<input type="text" placeholder="VIMEO ID" class="acf-vimeo-pro-data-input" />&nbsp;
-			<a class="refresh" href="javascript:void(0);">Refresh</a>
+			<a class="button button-secondary button-large" href="javascript:void(0);">Refresh</a>
 			<div class="acf-vimeo-pro-data-message"></div>
 			<br />
 			<div class="acf-vimeo-pro-data-display"></div><br />
