@@ -86,11 +86,14 @@
 			$el.addClass('has-data')
 
 			var list = [];
-			list.push("<h4>" + data.name + "</h4>")
-			list.push("<img src='" + data.pictures.sizes[2] . link+"' />")
+
+      list.push("<div class='acf-vimeo-data-display-preview'>")
+			list.push("<img src='" + data.pictures.sizes[2] . link + "' />")
+      list.push("</div>");
 			list.push("<div class='video-info'>")
-			list.push("Dimensions: " + data.width + "x" + data.height)
-			list.push("Formats: " + data.files.map(function(o){ return (o.height ? o.height + 'p ' : '') + (o.quality || "NA").toUpperCase() }).join(', '))
+      list.push("<h4>" + data.name + "</h4>")
+			list.push(data.width + "x" + data.height + "/" + data.time)
+			list.push(data.files.map(function(o){ return (o.height ? o.height + 'p ' : '') + (o.quality || "NA").toUpperCase() }).join(', '))
 			list.push("</div>");
 			var html = list.join('<br/>')
 			$display.html(html)
