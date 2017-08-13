@@ -9,6 +9,7 @@ Author: Theo Tillberg
 Author URI: theoberg.com
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+GitHub Plugin URI: ttillberg/acf-vimeo-pro-data
 */
 
 // exit if accessed directly
