@@ -36,8 +36,7 @@
 }
 
 .acf-vimeo-pro-data .acf-vimeo-pro-data-message {
-	margin-top: 10px;
-	font-weight: bold;
+	display: inline;
 }
 
 .acf-vimeo-pro-data input {
