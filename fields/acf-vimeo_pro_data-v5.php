@@ -186,14 +186,11 @@ class acf_field_vimeo_pro_data extends acf_field {
 	*  @return	n/a
 	*/
 
-
-
 	function input_admin_enqueue_scripts() {
 
 		// vars
 		$url = $this->settings['url'];
 		$version = $this->settings['version'];
-
 
 		// register & include JS
 		wp_register_script( 'acf-input-vimeo_pro_data', "{$url}assets/js/input.js", array('acf-input'), $version );

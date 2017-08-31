@@ -13,7 +13,6 @@
 		$message.hide()
 
 		$refresh.on('click', function() {
-			debugger
 			refresh($entry.val())
 		})
 
@@ -47,7 +46,6 @@
 			$entry.val("")
 			$display.empty()
 			$el.removeClass('has-data')
-
 		}
 
 		function refresh(id) {
@@ -72,10 +70,13 @@
 
 		}
 
+
+
 		function onDataLoaded(data) {
 			if (!data) {
 				return display_alert("The API didn't return any data.\nDouble check the ID or retry in a minute.", 1);
 			}
+
 			if (!data.files || data.files.length == 0) {
 				return display_alert("The video '" + data.name + "' was found but doesn't provide any files.\nMake sure the video the video provide external access to its files.", 1);
 			}
@@ -93,7 +94,6 @@
 		}
 
 		function displayData(data) {
-
 			$el.addClass('has-data')
 
 			var $html = $('<div>').addClass('acf-vimeo-data-display-preview')
