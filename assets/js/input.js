@@ -7,12 +7,13 @@
 		var $display 	= el.find('.acf-vimeo-pro-data-display');
 		var $message 	= el.find('.acf-vimeo-pro-data-message');
 		var $entry 		= el.find('input.acf-vimeo-pro-data-input');
-		var $refresh 	= el.find('a.refresh')
-		var $remove 	= el.find('a.remove')
+		var $refresh 	= el.find('a.acf-vimeo-pro-data__refresh')
+		var $remove 	= el.find('a.acf-vimeo-pro-data__remove')
 
 		$message.hide()
 
 		$refresh.on('click', function() {
+			debugger
 			refresh($entry.val())
 		})
 

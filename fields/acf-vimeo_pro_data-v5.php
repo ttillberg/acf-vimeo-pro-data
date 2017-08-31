@@ -151,11 +151,11 @@ class acf_field_vimeo_pro_data extends acf_field {
 		?>
 		<div class="acf-vimeo-pro-data">
 			<input type="text" placeholder="VIMEO ID" class="acf-vimeo-pro-data-input" />&nbsp;
-			<a class="button button-secondary button-large" href="javascript:void(0);">Refresh</a>
+			<a class="button button-secondary button-large acf-vimeo-pro-data__refresh" href="javascript:void(0);">Refresh</a>
 			<div class="acf-vimeo-pro-data-message"></div>
 			<br />
 			<div class="acf-vimeo-pro-data-display"></div><br />
-			<a class="remove" href="javascript:void(0);">Remove</a>
+			<a class="acf-vimeo-pro-data__remove" href="javascript:void(0);">Remove</a>
 			<input type="hidden" class="acf-vimeo-pro-data-hidden-input" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>" style="font-size:<?php echo $field['font_size'] ?>px;" />
 		</div>
 		<?php
@@ -406,7 +406,7 @@ class acf_field_vimeo_pro_data extends acf_field {
 		foreach ($strip_fields as $key => $value) {
 
 			$json -> $value = 'stripped';
-			
+
 		}
 
 		return $json;
