@@ -96,19 +96,30 @@
 
 			$el.addClass('has-data')
 
-			var list = [];
+			var $html = $('<div>').addClass('acf-vimeo-data-display-preview')
+			// poster frame wrapped inside a link to the video
+			.append(
+				$('<a>').attr({ href: data.link, target: '_blank' })
+				.append($('<img>').attr({ src: data.pictures.sizes[2].link }))
+			)
+			.append(
+				// video info showing beneath the poster frame
+				$('<div>').addClass('video-info')
+					// title
+					.append( $('<h4>').text(data.name))
+					// dimensions
+					.append( $('<div>').text([ data.width, 'x', data.height, ' / ', toMMSS(data.duration)].join('')))
+					// file formats
+					.append(
+						$('<div>').text(
+							data.files.map( function ( o ) {
+								return (o.height ? o.height + 'p ' : '') + (o.quality || 'NA').toUpperCase()
+							}).join(', ')
+						)
+					)
+			)
 
-      list.push("<div class='acf-vimeo-data-display-preview'>")
-			list.push("<a href='"+ data.link +"' target='_blank'><img src='" + data.pictures.sizes[2].link + "' /></a>")
-      list.push("</div>");
-			list.push("<div class='video-info'>")
-      list.push("<h4>" + data.name + "</h4>")
-			list.push(data.width + "x" + data.height + " / " + toMMSS(data.duration))
-			list.push("<br />");
-			list.push(data.files.map(function(o){ return (o.height ? o.height + 'p ' : '') + (o.quality || "NA").toUpperCase() }).join(', '))
-			list.push("</div>");
-			var html = list.join('')
-			$display.html(html)
+			$display.html($html)
 		}
 
 		function cleanupData(data) {
