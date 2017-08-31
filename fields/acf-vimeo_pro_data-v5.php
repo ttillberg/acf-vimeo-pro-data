@@ -161,6 +161,16 @@ class acf_field_vimeo_pro_data extends acf_field {
 		<?php
 	}
 
+	function getVimeoToken() {
+
+		$options = get_option( 'acf_vimeo_settings' );
+
+		if (is_array($options)) {
+			return $options['acf_vimeo_auth_token'];
+		}
+
+	}
+
 
 	/*
 	*  input_admin_enqueue_scripts()
@@ -187,6 +197,11 @@ class acf_field_vimeo_pro_data extends acf_field {
 
 		// register & include JS
 		wp_register_script( 'acf-input-vimeo_pro_data', "{$url}assets/js/input.js", array('acf-input'), $version );
+
+		$client_vars = array(
+	    'vimeo_token' => $this -> getVimeoToken(),
+		);
+		wp_localize_script( 'acf-input-vimeo_pro_data', 'server_vars', $client_vars );
 		wp_enqueue_script('acf-input-vimeo_pro_data');
 
 

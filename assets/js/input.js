@@ -56,15 +56,25 @@
 			if (~~id == 0) return display_alert("Please provide a valid Vimeo ID. It should contain about 9 digits.", 1)
 			display_alert('loading...')
 			var API_URL = "service/vimeo-api"
-			$.getJSON(API_URL + "/?vimeo_id=" + id, onDataLoaded);
+
+			$(document).ready(function() {
+				$.ajax({
+					url: 'https://api.vimeo.com/videos/' + id,
+					type: 'GET',
+					dataType: 'json',
+					success: onDataLoaded,
+					error: function( err ) {
+						display_alert( err && err.statusText, 1);
+					},
+					beforeSend: setAjaxAuthHeader
+				});
+			});
+
 		}
 
 		function onDataLoaded(data) {
 			if (!data) {
 				return display_alert("The API didn't return any data.\nDouble check the ID or retry in a minute.", 1);
-			}
-			if (data.error) {
-				return display_alert(data.error, 1);
 			}
 			if (!data.files || data.files.length == 0) {
 				return display_alert("The video '" + data.name + "' was found but doesn't provide any files.\nMake sure the video the video provide external access to its files.", 1);
@@ -196,6 +206,12 @@
 
 		});
 
+
+	}
+
+	function setAjaxAuthHeader(xhr) {
+
+		xhr.setRequestHeader('Authorization', 'bearer ' + server_vars.vimeo_token);
 
 	}
 
