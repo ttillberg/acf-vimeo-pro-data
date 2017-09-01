@@ -144,15 +144,8 @@
 					// title
 					.append( $('<h4>').text(data.name))
 					// dimensions
-					.append( $('<div>').text([ data.width, 'x', data.height, ' / ', toMMSS(data.duration)].join('')))
-					// file formats
-					.append(
-						$('<div>').text(
-							data.files.map( function ( o ) {
-								return (o.height ? o.height + 'p ' : '') + (o.quality || 'NA').toUpperCase()
-							}).join(', ')
-						)
-					)
+					.append( $('<div>').text([ toMMSS(data.duration), ' - ',data.width, 'x', data.height].join('')))
+
 			)
 
 			$display.html($html)
