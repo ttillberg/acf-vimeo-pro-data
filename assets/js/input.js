@@ -3,21 +3,55 @@
 	function initialize_field( $el ) {
 
 		var el 				= $el.find('div.acf-input');
-		var $input 		= el.find('input.acf-vimeo-pro-data-hidden-input');
+		var $input 		= el.find('input.acf-vimeo-pro-data__hidden-input');
 		var $display 	= el.find('.acf-vimeo-pro-data-display');
-		var $message 	= el.find('.acf-vimeo-pro-data-message');
+		var $message 	= el.find('.acf-vimeo-pro-data__message');
 		var $entry 		= el.find('input.acf-vimeo-pro-data-input');
 		var $refresh 	= el.find('a.acf-vimeo-pro-data__refresh')
-		var $remove 	= el.find('a.acf-vimeo-pro-data__remove')
+		var $clear 		= el.find('a.acf-vimeo-pro-data__clear')
+		var $search   = el.find('.search')
+
+		$search
+			.search({
+				apiSettings: {
+					url: 'https://api.vimeo.com/me/videos?query={query}&weak_search=true',
+					beforeSend: function (settings) {
+						// fixes Vimeo bug (weak_search) restricting search to lowercase
+						settings.urlData.query = settings.urlData.query.toLowerCase()
+						return settings
+					},
+					beforeXHR: setAjaxAuthHeader,
+					onResponse: function( resp ) {
+						if ( resp.data ) {
+							resp.data = resp.data.map( function (o) {
+								return Object.assign(o, {
+									image: o.pictures.sizes[2].link,
+									description: o.description || ""
+								})
+							})
+						}
+						return resp
+					}
+				},
+				fields: {
+					results : 'data',
+					title   : 'name',
+					image   : 'image'
+					// url     : 'html_url'
+				},
+				minCharacters : 3,
+				onSelect: function ( data, resp) {
+					refresh(data.link)
+				}
+			})
 
 		$message.hide()
 
 		$refresh.on('click', function() {
-			debugger
 			refresh($entry.val())
 		})
 
-		$remove.on('click', function() {
+		$clear.on('click', function() {
 			remove()
 		})
 
@@ -30,24 +64,24 @@
 
 		function display_alert(msg, level) {
 			if (level == 1) {
-				$el.addClass('warning')
+				$el.addClass('acf-vimeo-pro-data--warning')
 			}
 			msg = (msg || "").replace(/\n/g, "<br />");
 			$message.html(msg).show();
 		}
 
 		function clear_alert() {
-			$el.removeClass('warning')
+			$el.removeClass('acf-vimeo-pro-data--warning')
 			$message.text("").hide();
 		}
 
 		function remove() {
 			setData();
 			clear_alert()
+			$search.find('input').val("")
 			$entry.val("")
 			$display.empty()
 			$el.removeClass('has-data')
-
 		}
 
 		function refresh(id) {
@@ -56,16 +90,29 @@
 			if (~~id == 0) return display_alert("Please provide a valid Vimeo ID. It should contain about 9 digits.", 1)
 			display_alert('loading...')
 			var API_URL = "service/vimeo-api"
-			$.getJSON(API_URL + "/?vimeo_id=" + id, onDataLoaded);
+
+			$(document).ready(function() {
+				$.ajax({
+					url: 'https://api.vimeo.com/videos/' + id,
+					type: 'GET',
+					dataType: 'json',
+					success: onDataLoaded,
+					error: function( err ) {
+						display_alert( err && err.statusText, 1);
+					},
+					beforeSend: setAjaxAuthHeader
+				});
+			});
+
 		}
+
+
 
 		function onDataLoaded(data) {
 			if (!data) {
 				return display_alert("The API didn't return any data.\nDouble check the ID or retry in a minute.", 1);
 			}
-			if (data.error) {
-				return display_alert(data.error, 1);
-			}
+
 			if (!data.files || data.files.length == 0) {
 				return display_alert("The video '" + data.name + "' was found but doesn't provide any files.\nMake sure the video the video provide external access to its files.", 1);
 			}
@@ -83,22 +130,25 @@
 		}
 
 		function displayData(data) {
-
 			$el.addClass('has-data')
 
-			var list = [];
+			var $html = $('<div>').addClass('acf-vimeo-data-display-preview')
+			// poster frame wrapped inside a link to the video
+			.append(
+				$('<a>').attr({ href: data.link, target: '_blank' })
+				.append($('<img>').attr({ src: data.pictures.sizes[2].link }))
+			)
+			.append(
+				// video info showing beneath the poster frame
+				$('<div>').addClass('video-info')
+					// title
+					.append( $('<h4>').text(data.name))
+					// dimensions
+					.append( $('<div>').text([ toMMSS(data.duration), ' - ',data.width, 'x', data.height].join('')))
 
-      list.push("<div class='acf-vimeo-data-display-preview'>")
-			list.push("<a href='"+ data.link +"' target='_blank'><img src='" + data.pictures.sizes[2].link + "' /></a>")
-      list.push("</div>");
-			list.push("<div class='video-info'>")
-      list.push("<h4>" + data.name + "</h4>")
-			list.push(data.width + "x" + data.height + " / " + toMMSS(data.duration))
-			list.push("<br />");
-			list.push(data.files.map(function(o){ return (o.height ? o.height + 'p ' : '') + (o.quality || "NA").toUpperCase() }).join(', '))
-			list.push("</div>");
-			var html = list.join('')
-			$display.html(html)
+			)
+
+			$display.html($html)
 		}
 
 		function cleanupData(data) {
@@ -196,6 +246,12 @@
 
 		});
 
+
+	}
+
+	function setAjaxAuthHeader(xhr) {
+
+		xhr.setRequestHeader('Authorization', 'bearer ' + server_vars.vimeo_token);
 
 	}
 
