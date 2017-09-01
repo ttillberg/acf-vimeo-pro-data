@@ -150,13 +150,18 @@ class acf_field_vimeo_pro_data extends acf_field {
 
 		?>
 		<div class="acf-vimeo-pro-data">
-			<input type="text" placeholder="VIMEO ID" class="acf-vimeo-pro-data-input" />&nbsp;
-			<a class="button button-secondary button-large acf-vimeo-pro-data__refresh" href="javascript:void(0);">Refresh</a>
-			<div class="acf-vimeo-pro-data-message"></div>
-			<br />
-			<div class="acf-vimeo-pro-data-display"></div><br />
-			<a class="acf-vimeo-pro-data__remove" href="javascript:void(0);">Remove</a>
-			<input type="hidden" class="acf-vimeo-pro-data-hidden-input" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>" style="font-size:<?php echo $field['font_size'] ?>px;" />
+			<div class="ui search">
+				<input class="prompt" type="text" placeholder="Look up title..." autocomplete="on">
+				<div class="results"></div>
+			</div>
+			<input type="hidden" placeholder="VIMEO ID" class="acf-vimeo-pro-data-input" />
+			<div class="acf-vimeo-pro-data-display"></div>
+			<div class="acf-vimeo-pro-data__buttons">
+				<a class="button button-primary button-small acf-vimeo-pro-data__refresh " href="javascript:void(0);">Refresh</a>&nbsp;
+				<a class="button button-secondary button-small acf-vimeo-pro-data__clear" href="javascript:void(0);">Clear</a>
+			</div>
+			<input type="hidden" class="acf-vimeo-pro-data__hidden-input" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>" style="font-size:<?php echo $field['font_size'] ?>px;" />
+			<div class="acf-vimeo-pro-data__message"></div>
 		</div>
 		<?php
 	}
@@ -191,6 +196,12 @@ class acf_field_vimeo_pro_data extends acf_field {
 		// vars
 		$url = $this->settings['url'];
 		$version = $this->settings['version'];
+
+		// register search plugin
+		wp_register_script( 'ui-semantic', "{$url}assets/search/semantic.min.js");
+		wp_enqueue_script('ui-semantic');
+		wp_register_style( 'ui-semantic', "{$url}assets/search/semantic.min.css");
+		wp_enqueue_style('ui-semantic');
 
 		// register & include JS
 		wp_register_script( 'acf-input-vimeo_pro_data', "{$url}assets/js/input.js", array('acf-input'), $version );

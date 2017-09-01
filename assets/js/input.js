@@ -3,12 +3,47 @@
 	function initialize_field( $el ) {
 
 		var el 				= $el.find('div.acf-input');
-		var $input 		= el.find('input.acf-vimeo-pro-data-hidden-input');
+		var $input 		= el.find('input.acf-vimeo-pro-data__hidden-input');
 		var $display 	= el.find('.acf-vimeo-pro-data-display');
-		var $message 	= el.find('.acf-vimeo-pro-data-message');
+		var $message 	= el.find('.acf-vimeo-pro-data__message');
 		var $entry 		= el.find('input.acf-vimeo-pro-data-input');
 		var $refresh 	= el.find('a.acf-vimeo-pro-data__refresh')
-		var $remove 	= el.find('a.acf-vimeo-pro-data__remove')
+		var $clear 		= el.find('a.acf-vimeo-pro-data__clear')
+		var $search   = el.find('.search')
+
+		$search
+			.search({
+				apiSettings: {
+					url: 'https://api.vimeo.com/me/videos?query={query}&weak_search=true',
+					beforeSend: function (settings) {
+						// fixes Vimeo bug (weak_search) restricting search to lowercase
+						settings.urlData.query = settings.urlData.query.toLowerCase()
+						return settings
+					},
+					beforeXHR: setAjaxAuthHeader,
+					onResponse: function( resp ) {
+						if ( resp.data ) {
+							resp.data = resp.data.map( function (o) {
+								return Object.assign(o, {
+									image: o.pictures.sizes[2].link,
+									description: o.description || ""
+								})
+							})
+						}
+						return resp
+					}
+				},
+				fields: {
+					results : 'data',
+					title   : 'name',
+					image   : 'image'
+					// url     : 'html_url'
+				},
+				minCharacters : 3,
+				onSelect: function ( data, resp) {
+					refresh(data.link)
+				}
+			})
 
 		$message.hide()
 
@@ -16,7 +51,7 @@
 			refresh($entry.val())
 		})
 
-		$remove.on('click', function() {
+		$clear.on('click', function() {
 			remove()
 		})
 
@@ -29,20 +64,21 @@
 
 		function display_alert(msg, level) {
 			if (level == 1) {
-				$el.addClass('warning')
+				$el.addClass('acf-vimeo-pro-data--warning')
 			}
 			msg = (msg || "").replace(/\n/g, "<br />");
 			$message.html(msg).show();
 		}
 
 		function clear_alert() {
-			$el.removeClass('warning')
+			$el.removeClass('acf-vimeo-pro-data--warning')
 			$message.text("").hide();
 		}
 
 		function remove() {
 			setData();
 			clear_alert()
+			$search.find('input').val("")
 			$entry.val("")
 			$display.empty()
 			$el.removeClass('has-data')
