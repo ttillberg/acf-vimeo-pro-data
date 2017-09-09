@@ -132,11 +132,17 @@
 		function displayData(data) {
 			$el.addClass('has-data')
 
-			var $html = $('<div>').addClass('acf-vimeo-data-display-preview')
+			var $html = $('<div>').addClass('acf-vimeo-data-display__preview')
 			// poster frame wrapped inside a link to the video
 			.append(
 				$('<a>').attr({ href: data.link, target: '_blank' })
-				.append($('<img>').attr({ src: data.pictures.sizes[2].link }))
+				.append($('<img>')
+					.attr({ src: data.pictures.sizes
+						.find(function( data ) {
+							return data.height > 300 
+						}).link 
+					})
+			)
 			)
 			.append(
 				// video info showing beneath the poster frame
