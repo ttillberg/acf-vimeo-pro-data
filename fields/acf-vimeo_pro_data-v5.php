@@ -168,11 +168,7 @@ class acf_field_vimeo_pro_data extends acf_field {
 
 	function getVimeoToken() {
 
-		$options = get_option( 'acf_vimeo_settings' );
-
-		if (is_array($options)) {
-			return $options['acf_vimeo_auth_token'];
-		}
+		return get_field( 'acf_vimeo_auth_token', 'options' );
 
 	}
 
