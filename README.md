@@ -6,7 +6,7 @@ Adds a 'Vimeo Pro Data' field type for the Advanced Custom Fields WordPress plug
 
 The field offers an easy way to fetch video data (sources, poster-frames, sizes and more) from a specified Vimeo Pro account.
 
-![image](https://user-images.githubusercontent.com/557990/29169856-72886530-7dd6-11e7-97ad-f3363d3183ec.png)
+![image](https://user-images.githubusercontent.com/557990/30244505-2fc60e04-95bf-11e7-99e4-c8fe1800647b.png)
 
 ### Compatibility
 
