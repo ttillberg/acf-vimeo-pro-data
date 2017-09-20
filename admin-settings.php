@@ -1,6 +1,5 @@
 <?php
 
-add_action('acf/init', initSettings);
 
 function plugin_add_settings_link( $links ) {
 	$settings_link = '<a href="options-general.php?page=acf-options-acf-vimeo-pro-data">' . __( 'Settings' ) . '</a>';
@@ -8,7 +7,7 @@ function plugin_add_settings_link( $links ) {
 	return $links;
 }
 
-function initSettings () {
+$initSettings = function () {
 	
 	if( !function_exists('acf_add_options_page') || !function_exists('acf_add_local_field_group')) 
 	
@@ -67,5 +66,6 @@ function initSettings () {
 		'active' => 1,
 		'description' => '',
 	));
-	
-}
+};
+
+add_action('acf/init', initSettings);
