@@ -68,4 +68,4 @@ $initSettings = function () {
 	));
 };
 
-add_action('acf/init', initSettings);
+add_action('acf/init', $initSettings);
