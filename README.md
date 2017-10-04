@@ -15,11 +15,22 @@ This ACF field type is compatible with:
 
 ### Installation
 
+
+#### Automatic (Recommended)
+
+To keep your plugin up to date, install the [GitHub updater](https://github.com/afragen/github-updater) plugin and follow the instructions to install this repo. 
+
+#### Manual
+
 1. Copy the `acf-vimeo_pro_data` folder into your `wp-content/plugins` folder
 2. Activate the Vimeo Pro Data plugin via the plugins admin page
-3. [Register a new app](https://developer.vimeo.com/api/start), generate an Access Token and add it to the acf-vimeo-pro-data option at the bottom of the Admin menu
-4. Create a new field via ACF and select the Vimeo Pro Data type
-5. Please refer to the description for more info regarding the field type settings
+
+
+#### Usage
+
+1. Inside your Vimeo Admin, [register a new app](https://developer.vimeo.com/api/start), generate an Access Token.
+2. Open the Vimeo Pro Data settings (inside the Settings menu) and add the generated token. 
+3. Create a new field via ACF and select the `Vimeo Pro` Data type
 
 ### Changelog
 Please see `readme.txt` for changelog
