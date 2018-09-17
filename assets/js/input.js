@@ -9,38 +9,34 @@
     var $clear = el.find("a.acf-vimeo-pro-data__clear");
     var $search = el.find(".search");
 
-    $search.search({
-      apiSettings: {
-        url: "https://api.vimeo.com/me/videos?query={query}&weak_search=true",
-        beforeSend: function(settings) {
-          // fixes Vimeo bug (weak_search) restricting search to lowercase
-          settings.urlData.query = settings.urlData.query.toLowerCase();
-          return settings;
-        },
-        beforeXHR: setAjaxAuthHeader,
-        onResponse: function(resp) {
-          if (resp.data) {
-            resp.data = resp.data.map(function(o) {
-              return Object.assign(o, {
-                image: o.pictures.sizes[2].link,
-                description: o.description || ""
-              });
-            });
+    var $results = $(".restults");
+
+    var settings = {
+      onSelect: function(entry) {
+        refresh(entry.link);
+      },
+      createQuery: function(query) {
+        var fields =
+          "name,description,link,pictures.sizes.link,link,uri,created_time,modified_time,duration,width,height";
+        var url = query
+          ? (
+              "https://api.vimeo.com/me/videos?query={query}&weak_search=true&per_page=30&fields=" +
+              fields
+            ).replace(/\{query\}/, query)
+          : "https://api.vimeo.com/me/videos?per_page=10&fields=" + fields;
+        return {
+          url: url,
+          beforeSend: function(request) {
+            request.setRequestHeader(
+              "Authorization",
+              "bearer " + server_vars.vimeo_token
+            );
           }
-          return resp;
-        }
-      },
-      fields: {
-        results: "data",
-        title: "name",
-        image: "image"
-        // url     : 'html_url'
-      },
-      minCharacters: 3,
-      onSelect: function(data, resp) {
-        refresh(data.link);
+        };
       }
-    });
+    };
+
+    $search.searchApi(settings);
 
     $message.hide();
 
@@ -77,7 +73,6 @@
       clear_alert();
       $search.find("input").val("");
       $entry.val("");
-      $display.empty();
       $el.removeClass("has-data");
     }
 
@@ -91,17 +86,23 @@
         );
       display_alert("loading...");
       var API_URL = "service/vimeo-api";
-
+      var fields =
+        "name,description,link,pictures.sizes.link, pictures.sizes.width, pictures.sizes.height,link,uri,created_time,modified_time,duration,width,height,files";
       $(document).ready(function() {
         $.ajax({
-          url: "https://api.vimeo.com/videos/" + id,
+          url: "https://api.vimeo.com/videos/" + id + "?fields=" + fields,
           type: "GET",
           dataType: "json",
           success: onDataLoaded,
           error: function(err) {
             display_alert(err && err.statusText, 1);
           },
-          beforeSend: setAjaxAuthHeader
+          beforeSend: function setAjaxAuthHeader(xhr) {
+            xhr.setRequestHeader(
+              "Authorization",
+              "bearer " + server_vars.vimeo_token
+            );
+          }
         });
       });
     }
@@ -137,60 +138,46 @@
 
     function displayData(data) {
       $el.addClass("has-data");
+      var $html;
 
-      var $html = $("<div>")
-        .addClass("acf-vimeo-data-display__preview")
-        // poster frame wrapped inside a link to the video
-        .append(
-          $("<a>")
-            .attr({ href: data.link, target: "_blank" })
-            .append(
-              $("<img>").attr({
-                src: data.pictures.sizes.find(function(data) {
-                  return data.height > 300;
-                }).link
-              })
-            )
-        )
-        .append(
-          // video info showing beneath the poster frame
-          $("<div>")
-            .addClass("video-info")
-            // title
-            .append($("<h4>").text(data.name))
-            // dimensions
-            .append(
-              $("<div>").text(
-                [
-                  toMMSS(data.duration),
-                  " - ",
-                  data.width,
-                  "x",
-                  data.height
-                ].join("")
+      if ($display.is(":empty")) {
+        $html = $("<div>")
+          .addClass("acf-vimeo-data-display__preview")
+          // poster frame wrapped inside a link to the video
+          .append(
+            $("<a>")
+              // .attr({ href: insertLink, target: "_blank" })
+              .append($('<img data-name="image">'))
+              .append(
+                // video info showing beneath the poster frame
+                $("<div>")
+                  .addClass("video-info")
+                  // title
+                  .append($("<h4>"))
+                  // dimensions
+                  .append($("<div>"))
               )
-            )
-        );
+          );
+        $display.html($html);
+      } else {
+        $html = $display.first();
+      }
 
-      $display.html($html);
+      var insertCopy = getVideoInfoString(data);
+      var insertLink = data.link;
+      var insertSrc = data.pictures.sizes.find(function(data) {
+        return data.height > 300;
+      }).link;
+
+      $html.find("a").attr({ href: insertLink, target: "_blank" });
+      $html.find("a img").attr({ src: insertSrc });
+      $html.find(".video-info h4").text(data.name);
+      $html.find(".video-info div").html(insertCopy);
+
+      $el.trigger("load-fix");
     }
 
     function cleanupData(data) {
-      var strip_fields = [
-        "user",
-        "content_rating",
-        "privacy",
-        "embed",
-        "review_link",
-        "embed_presets",
-        "metadata",
-        "stats",
-        "ressource_key",
-        "tags"
-      ];
-      for (var i in strip_fields) {
-        data[strip_fields[i]] = "stripped_out";
-      }
       return data;
     }
 
@@ -205,6 +192,23 @@
     function setData(data) {
       var str = JSON.stringify(data);
       $input.val(str);
+    }
+
+    function formatDate(date) {
+      return date.toLocaleDateString({});
+    }
+
+    function getVideoInfoString(data) {
+      return [
+        toMMSS(data.duration),
+        " - ",
+        data.width,
+        "x",
+        data.height,
+        "<br/>",
+        "Last modified: ",
+        formatDate(new Date(data.created_time))
+      ].join("");
     }
 
     function toMMSS(value) {
@@ -271,9 +275,5 @@
           initialize_field($(this));
         });
     });
-  }
-
-  function setAjaxAuthHeader(xhr) {
-    xhr.setRequestHeader("Authorization", "bearer " + server_vars.vimeo_token);
   }
 })(jQuery);
