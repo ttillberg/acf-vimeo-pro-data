@@ -28,8 +28,8 @@ To keep your plugin up to date, install the [GitHub updater](https://github.com/
 
 #### Usage
 
-1. Inside your Vimeo Admin, [register a new app](https://developer.vimeo.com/api/start), generate an Access Token.
-2. Open the Vimeo Pro Data settings (inside the Settings menu) and add the generated token. 
+1. Inside your Vimeo Admin, [register a new app](https://developer.vimeo.com/api/start), generate an Access Token. Make sure you tick the `Video Files` scope (as well as `Public` and `Private` depending on your needs).
+2. Open the Vimeo Pro Data settings (inside the Settings menu) and paste the generated token. 
 3. Create a new field via ACF and select the `Vimeo Pro` Data type
 
 ### Changelog
