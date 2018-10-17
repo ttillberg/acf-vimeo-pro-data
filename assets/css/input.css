@@ -35,8 +35,10 @@
 
 .acf-vimeo-data-display__preview img {
   box-sizing: border-box;
-  margin: 5px;
-  height: 140px;
+  padding: 5px;
+  max-width: 100%;
+  max-height: 140px;
+  
   border-radius: 2px;
 }
 
@@ -57,6 +59,7 @@
   position: relative;
   margin: 0;
   width: auto;
+  max-width: 100%;
   overflow: hidden;
   border-radius: 3px;
   box-shadow: 2px 5px 20px rgba(0, 0, 0, 0.1);
