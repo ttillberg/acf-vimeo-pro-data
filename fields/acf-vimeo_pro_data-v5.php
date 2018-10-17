@@ -418,16 +418,9 @@ class acf_field_vimeo_pro_data extends acf_field
             return $value;
         }
 
-        $strip_fields = array('user', 'download','description', 'content_rating', 'privacy', 'embed', 'review_link', 'embed_presets', 'metadata','stats', 'ressource_key', 'tags');
+        $json = json_decode(stripslashes($value));
 
-        $json = json_decode($value);
-
-        foreach ($strip_fields as $key => $value) {
-
-            // $json -> $value = 'stripped';
-        }
-
-        return $json;
+        return ($json);
     }
 
 
