@@ -13,7 +13,7 @@
 
     var settings = {
       onSelect: function(entry) {
-        refresh(entry.link);
+        refresh(entry.uri);
       },
       createQuery: function(query) {
         var fields =
@@ -189,7 +189,12 @@
     }
 
     function parse_vimeo_id(id) {
-      return (id || "").match(/[0-9]{6,12}/);
+      var match = (id || "").match(/[0-9]{6,12}/);
+      if (!match || !match.length) { 
+        return false 
+      } else { 
+        return match[0] 
+      }
     }
 
     function getData() {
