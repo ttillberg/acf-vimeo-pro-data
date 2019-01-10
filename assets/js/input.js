@@ -114,6 +114,13 @@
           1
         );
       }
+      
+      if (typeof(data) !== 'object') {
+        console.log('data', data)
+        return display_alert("The video was found but provides wrong data type '" + typeof(data) +"'")
+      }
+      
+      console.log('success data', data)
 
       if (!data.files || data.files.length == 0) {
         return display_alert(
