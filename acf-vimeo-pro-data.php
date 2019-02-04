@@ -4,7 +4,7 @@
 Plugin Name: Advanced Custom Fields: Vimeo Pro Data
 Plugin URI: PLUGIN_URL
 Description: Retrieves video sources from Vimeo Pro account
-Version: 1.1.3
+Version: 1.1.4
 Author: Theo Tillberg
 Author URI: theoberg.com
 License: GPLv2 or later
