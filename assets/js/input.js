@@ -13,7 +13,7 @@
 
     var settings = {
       onSelect: function(entry) {
-        refresh(entry.link);
+        refresh(entry.uri);
       },
       createQuery: function(query) {
         var fields =
@@ -114,6 +114,13 @@
           1
         );
       }
+      
+      if (typeof(data) !== 'object') {
+        console.log('data', data)
+        return display_alert("The video was found but provides wrong data type '" + typeof(data) +"'")
+      }
+      
+      console.log('success data', data)
 
       if (!data.files || data.files.length == 0) {
         return display_alert(
@@ -182,7 +189,12 @@
     }
 
     function parse_vimeo_id(id) {
-      return (id || "").match(/[0-9]{6,12}/);
+      var match = (id || "").match(/[0-9]{6,12}/);
+      if (!match || !match.length) { 
+        return false 
+      } else { 
+        return match[0] 
+      }
     }
 
     function getData() {

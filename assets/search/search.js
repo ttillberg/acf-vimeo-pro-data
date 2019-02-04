@@ -110,7 +110,6 @@
           type: "GET",
           success: function(data, textStatus, request) {
             populate(data);
-            console.log(data);
             resultCache[str] = { status: "success", value: data };
           },
           error: function(request, textStatus, errorThrown) {}
