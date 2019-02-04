@@ -55,9 +55,9 @@ class acf_field_vimeo_pro_data extends acf_field
         *  defaults (array) Array of default settings which are merged into the field object. These are used later in settings
         */
 
-        $this->defaults = array(
-            'font_size'	=> 14,
-        );
+        // $this->defaults = array(
+        //     'font_size'	=> 14,
+        // );
 
 
         /*
