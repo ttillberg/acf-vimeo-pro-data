@@ -1,4 +1,60 @@
 (function($) {
+  
+  function formatDate(date) {
+    return date.toLocaleDateString({});
+  }
+
+  function getVideoInfoString(data) {
+    return [
+      toMMSS(data.duration),
+      " - ",
+      data.width,
+      "x",
+      data.height,
+      "<br/>",
+      "Last modified: ",
+      formatDate(new Date(data.created_time))
+    ].join("");
+  }
+
+  function toMMSS(value) {
+    var sec_num = parseInt(value, 10); // don't forget the second param
+    var hours = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num % 3600) / 60);
+    var seconds = Math.floor((sec_num % 60));
+
+    if (hours < 10) {
+      hours = "0" + hours;
+    }
+    if (minutes < 10) {
+      minutes = "0" + minutes;
+    }
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+    
+    var output = minutes + ":" + seconds
+    
+    return hours > 0 ? hours + ':' + output : output;
+  }
+  
+  function compareDates(da, db) {
+    var str = ""
+    var dateDiff = Math.abs(da - db)
+    if (dateDiff < 1000 * 60 * 10) {
+      str = "10 min ago"
+    } else if (dateDiff < 3600000) {
+      str = "an hour ago"
+    } else if (dateDiff < 3600000 * 6) {
+      str = "" + Math.floor(dateDiff / 3600000 + 1) + " hours ago"
+    } else if (dateDiff < 3600000 * 24) {
+      str = "a day ago"
+    } else if (dateDiff < 3600000 * 24 * 7) {
+      str = "a week ago"
+    }
+    return str && ("less than " + str)  || ""
+  }
+  
   function initialize_field($el) {
     var el = $el.find("div.acf-input");
     var $input = el.find("input.acf-vimeo-pro-data__hidden-input");
@@ -9,11 +65,25 @@
     var $clear = el.find("a.acf-vimeo-pro-data__clear");
     var $search = el.find(".search");
 
-    var $results = $(".restults");
-
     var settings = {
       onSelect: function(entry) {
         refresh(entry.uri);
+      },
+      displayEntryThumb : function (entry) {
+        return entry.pictures.sizes[2].link.replace(/\?.*$/, "");
+      },
+      displayEntryTitle : function (entry) {
+        return entry.name
+      },
+      displayEntryInfo : function (entry) {
+        var now = new Date()
+        var dateDiff = now - new Date(entry.created_time) 
+        
+        var date = entry.modified_time && compareDates(now, new Date(entry.modified_time)) || ""
+        date = date || "created " + formatDate(new Date(entry.created_time))
+        date = "<br />" + date
+        
+        return toMMSS(entry.duration) + ' - ' + entry.width + 'x' + entry.height + date
       },
       createQuery: function(query) {
         var fields =
@@ -204,42 +274,6 @@
     function setData(data) {
       var str = JSON.stringify(data);
       $input.val(str);
-    }
-
-    function formatDate(date) {
-      return date.toLocaleDateString({});
-    }
-
-    function getVideoInfoString(data) {
-      return [
-        toMMSS(data.duration),
-        " - ",
-        data.width,
-        "x",
-        data.height,
-        "<br/>",
-        "Last modified: ",
-        formatDate(new Date(data.created_time))
-      ].join("");
-    }
-
-    function toMMSS(value) {
-      var sec_num = parseInt(value, 10); // don't forget the second param
-      var hours = Math.floor(sec_num / 3600);
-      var minutes = Math.floor((sec_num - hours * 3600) / 60);
-      var seconds = sec_num - hours * 3600 - minutes * 60;
-
-      if (hours < 10) {
-        hours = "0" + hours;
-      }
-      if (minutes < 10) {
-        minutes = "0" + minutes;
-      }
-      if (seconds < 10) {
-        seconds = "0" + seconds;
-      }
-
-      return minutes + "'" + seconds + '"';
     }
   }
 
