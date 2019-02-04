@@ -16,7 +16,6 @@ GitHub Plugin URI: ttillberg/acf-vimeo-pro-data
 if( ! defined( 'ABSPATH' ) ) exit;
 
 require_once dirname( __FILE__ ) . '/admin-settings.php';
-require_once dirname( __FILE__ ) . '/admin-endpoint.php';
 
 // check if class already exists
 if( !class_exists('acf_plugin_vimeo_pro_data') ) :
