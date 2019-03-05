@@ -11,7 +11,10 @@ Retrieves video sources from Vimeo Pro account
 
 == Description ==
 
-EXTENDED_DESCRIPTION
+Adds a 'Vimeo Pro Data' field type for the Advanced Custom Fields WordPress plugin.
+
+The field offers an easy way to fetch video data (sources, poster-frames, sizes and more) from a specified Vimeo Pro account.
+
 
 = Compatibility =
 
@@ -20,13 +23,22 @@ This ACF field type is compatible with:
 
 == Installation ==
 
+* Automatic
+To keep your plugin up to date, install the [GitHub updater](https://github.com/afragen/github-updater) plugin and follow the instructions to install this repo. 
+
+* Manual
+
 1. Copy the `acf-vimeo_pro_data` folder into your `wp-content/plugins` folder
 2. Activate the Vimeo Pro Data plugin via the plugins admin page
-3. Add your Vimeo Pro ID into the acf-vimeo-pro-data option in the Admin menu
-4. Create a new field via ACF and select the Vimeo Pro Data type
-5. Please refer to the description for more info regarding the field type settings
+
 
 == Changelog ==
 
 = 1.0.0 =
 * Initial Release.
+= 1.1.0 =
+Replace search component
+= 1.1.3 =
+Enhance dropdown
+= 1.1.5 =
+Fix settings page not displaying correctly
