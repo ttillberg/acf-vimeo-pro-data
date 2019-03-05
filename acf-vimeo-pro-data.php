@@ -2,9 +2,9 @@
 
 /*
 Plugin Name: Advanced Custom Fields: Vimeo Pro Data
-Plugin URI: PLUGIN_URL
+Plugin URI: https://github.com/ttillberg/acf-vimeo-pro-data
 Description: Retrieves video sources from Vimeo Pro account
-Version: 1.1.3
+Version: 1.1.5
 Author: Theo Tillberg
 Author URI: theoberg.com
 License: GPLv2 or later
@@ -16,7 +16,6 @@ GitHub Plugin URI: ttillberg/acf-vimeo-pro-data
 if( ! defined( 'ABSPATH' ) ) exit;
 
 require_once dirname( __FILE__ ) . '/admin-settings.php';
-require_once dirname( __FILE__ ) . '/admin-endpoint.php';
 
 // check if class already exists
 if( !class_exists('acf_plugin_vimeo_pro_data') ) :

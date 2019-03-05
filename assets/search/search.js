@@ -94,6 +94,10 @@
       });
       if (item) {
         item.$el.addClass("active");
+        var el = item.$el.get(0)
+        if (el && typeof(el.scrollIntoView) === 'function'){
+          el.scrollIntoView({ block: 'nearest', behavior:'smooth' })
+        }
       }
     }
 
@@ -145,13 +149,15 @@
         });
 
         // thumbnail
-        var imageSource = entry.pictures.sizes[2].link.replace(/\?.*$/, "");
+        var imageSource = settings.displayEntryThumb(entry)
         $li_img = $('<img height="40" />').attr("src", imageSource);
 
         // description
-        $li_title = $("<h5 />").text(entry.name);
-        $li_info = $("<p />").text(entry.created_time);
-        $li.append($li_img, $("<div>").append($li_title, $li_info));
+        $li_title = $("<h5 />").text(settings.displayEntryTitle(entry));
+        $li_info = $("<p />").html(settings.displayEntryInfo(entry));
+        $li.append($li_img, 
+            $("<div>").append($li_title, $li_info)
+          );
 
         $ul.append($li);
       });
