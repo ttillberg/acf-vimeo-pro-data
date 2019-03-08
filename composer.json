@@ -1,0 +1,13 @@
+{
+    "name": "ttillberg/acf-vimeo-pro-data",
+    "type": "wordpress-plugin",
+    "description": "Vimeo PRO Data field for Advanced Custom Fields v5",
+    "license": "",
+    "authors": [
+        {
+            "name": "Theo Tillberg",
+            "role": "Developer",
+            "homepage": "https://github.com/ttillberg"
+        }
+    ]
+}
