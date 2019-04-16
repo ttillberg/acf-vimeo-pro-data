@@ -190,24 +190,24 @@ class acf_field_vimeo_pro_data extends acf_field
         $version = $this->settings['version'];
 
         // register search plugin
-        wp_register_script('ui-search', "{$url}assets/search/search.js");
-        wp_enqueue_script('ui-search');
-        wp_register_style('ui-search', "{$url}assets/search/search.css");
-        wp_enqueue_style('ui-search');
+        wp_register_script('acf-input-vimeo_pro_data--ui-search', "{$url}assets/search/search.js");
+        wp_enqueue_script('acf-input-vimeo_pro_data--ui-search');
+        wp_register_style('acf-input-vimeo_pro_data--ui-search', "{$url}assets/search/search.css");
+        wp_enqueue_style('acf-input-vimeo_pro_data--ui-search');
 
         // register & include JS
-        wp_register_script('acf-input-vimeo_pro_data', "{$url}assets/js/input.js", array('acf-input'), $version);
+        wp_register_script('acf-input-vimeo_pro_data--ui', "{$url}assets/js/input.js", array('acf-input'), $version);
 
         $client_vars = array(
         'vimeo_token' => $this -> getVimeoToken(),
         );
-        wp_localize_script('acf-input-vimeo_pro_data', 'server_vars', $client_vars);
-        wp_enqueue_script('acf-input-vimeo_pro_data');
+        wp_localize_script('acf-input-vimeo_pro_data--ui', 'server_vars', $client_vars);
+        wp_enqueue_script('acf-input-vimeo_pro_data--ui');
 
 
         // register & include CSS
-        wp_register_style('acf-input-vimeo_pro_data', "{$url}assets/css/input.css", array('acf-input'), $version);
-        wp_enqueue_style('acf-input-vimeo_pro_data');
+        wp_register_style('acf-input-vimeo_pro_data--ui', "{$url}assets/css/input.css", array('acf-input'), $version);
+        wp_enqueue_style('acf-input-vimeo_pro_data--ui');
     }
 
 
