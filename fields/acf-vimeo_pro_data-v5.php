@@ -106,15 +106,7 @@ class acf_field_vimeo_pro_data extends acf_field
         *
         *  More than one setting can be added by copy/paste the above code.
         *  Please note that you must also have a matching $defaults value for the field name (font_size)
-        */
-
-        acf_render_field_setting($field, array(
-            'label'			=> __('Font Size', 'acf-vimeo_pro_data'),
-            'instructions'	=> __('Customise the input font size', 'acf-vimeo_pro_data'),
-            'type'			=> 'number',
-            'name'			=> 'font_size',
-            'prepend'		=> 'px',
-        ));
+        */ 
     }
 
 
