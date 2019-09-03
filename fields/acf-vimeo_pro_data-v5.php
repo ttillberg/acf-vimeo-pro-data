@@ -106,15 +106,7 @@ class acf_field_vimeo_pro_data extends acf_field
         *
         *  More than one setting can be added by copy/paste the above code.
         *  Please note that you must also have a matching $defaults value for the field name (font_size)
-        */
-
-        acf_render_field_setting($field, array(
-            'label'			=> __('Font Size', 'acf-vimeo_pro_data'),
-            'instructions'	=> __('Customise the input font size', 'acf-vimeo_pro_data'),
-            'type'			=> 'number',
-            'name'			=> 'font_size',
-            'prepend'		=> 'px',
-        ));
+        */ 
     }
 
 
@@ -161,7 +153,7 @@ class acf_field_vimeo_pro_data extends acf_field
 			<input type="hidden" placeholder="VIMEO ID" class="acf-vimeo-pro-data-input" />
 			<div class="acf-vimeo-pro-data-display"></div>
 			<div class="acf-vimeo-pro-data__buttons">
-				<a class="button button-primary button-small acf-vimeo-pro-data__refresh " href="javascript:void(0);">Refresh</a>&nbsp;
+				<a class="button button-secondary button-small acf-vimeo-pro-data__refresh " href="javascript:void(0);">Refresh</a>&nbsp;
 				<a class="button button-secondary button-small acf-vimeo-pro-data__clear" href="javascript:void(0);">Clear</a>
 			</div>
 			<input type="hidden" class="acf-vimeo-pro-data__hidden-input" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>" style="font-size:<?php echo $field['font_size'] ?>px;" />
@@ -198,24 +190,24 @@ class acf_field_vimeo_pro_data extends acf_field
         $version = $this->settings['version'];
 
         // register search plugin
-        wp_register_script('ui-search', "{$url}assets/search/search.js");
-        wp_enqueue_script('ui-search');
-        wp_register_style('ui-search', "{$url}assets/search/search.css");
-        wp_enqueue_style('ui-search');
+        wp_register_script('acf-input-vimeo_pro_data--ui-search', "{$url}assets/search/search.js");
+        wp_enqueue_script('acf-input-vimeo_pro_data--ui-search');
+        wp_register_style('acf-input-vimeo_pro_data--ui-search', "{$url}assets/search/search.css");
+        wp_enqueue_style('acf-input-vimeo_pro_data--ui-search');
 
         // register & include JS
-        wp_register_script('acf-input-vimeo_pro_data', "{$url}assets/js/input.js", array('acf-input'), $version);
+        wp_register_script('acf-input-vimeo_pro_data--ui', "{$url}assets/js/input.js", array('acf-input'), $version);
 
         $client_vars = array(
         'vimeo_token' => $this -> getVimeoToken(),
         );
-        wp_localize_script('acf-input-vimeo_pro_data', 'server_vars', $client_vars);
-        wp_enqueue_script('acf-input-vimeo_pro_data');
+        wp_localize_script('acf-input-vimeo_pro_data--ui', 'server_vars', $client_vars);
+        wp_enqueue_script('acf-input-vimeo_pro_data--ui');
 
 
         // register & include CSS
-        wp_register_style('acf-input-vimeo_pro_data', "{$url}assets/css/input.css", array('acf-input'), $version);
-        wp_enqueue_style('acf-input-vimeo_pro_data');
+        wp_register_style('acf-input-vimeo_pro_data--ui', "{$url}assets/css/input.css", array('acf-input'), $version);
+        wp_enqueue_style('acf-input-vimeo_pro_data--ui');
     }
 
 
