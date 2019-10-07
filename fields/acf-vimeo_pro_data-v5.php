@@ -156,7 +156,7 @@ class acf_field_vimeo_pro_data extends acf_field
 				<a class="button button-secondary button-small acf-vimeo-pro-data__refresh " href="javascript:void(0);">Refresh</a>&nbsp;
 				<a class="button button-secondary button-small acf-vimeo-pro-data__clear" href="javascript:void(0);">Clear</a>
 			</div>
-			<input type="hidden" class="acf-vimeo-pro-data__hidden-input" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>" style="font-size:<?php echo $field['font_size'] ?>px;" />
+			<input type="hidden" class="acf-vimeo-pro-data__hidden-input" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>" />
 			<div class="acf-vimeo-pro-data__message"></div>
 		</div>
 		<?php
