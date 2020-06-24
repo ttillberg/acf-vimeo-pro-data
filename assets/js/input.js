@@ -268,12 +268,21 @@
     }
 
     function getData() {
-      return $input.val();
+      var val = $input.val();
+
+      var unescaped = val.split(String.fromCharCode(92,92)).join(String.fromCharCode(92));
+      return unescaped;
     }
 
     function setData(data) {
       var str = JSON.stringify(data);
-      $input.val(str);
+      if(!str) {
+        $input.val('');
+        return;
+      }
+
+      var escaped = str.split(String.fromCharCode(92)).join(String.fromCharCode(92,92));
+      $input.val(escaped);
     }
   }
 
