@@ -4,7 +4,7 @@
 Plugin Name: Advanced Custom Fields: Vimeo Pro Data
 Plugin URI: https://github.com/ttillberg/acf-vimeo-pro-data
 Description: Retrieves video sources from Vimeo Pro account
-Version: 1.1.5
+Version: 1.1.6
 Author: Theo Tillberg
 Author URI: theoberg.com
 License: GPLv2 or later
