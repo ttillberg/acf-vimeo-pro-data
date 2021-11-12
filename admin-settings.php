@@ -9,7 +9,7 @@ function plugin_add_settings_link($links)
 }
 
 $initSettings = function () {
-    if (!current_user_can('administrator') || !function_exists('acf_add_options_page') || !function_exists('acf_add_local_field_group')) {
+    if (!function_exists('acf_add_options_page') || !function_exists('acf_add_local_field_group')) {
         return;
     }
     add_filter("plugin_action_links_acf-vimeo-pro-data/acf-vimeo-pro-data.php", 'plugin_add_settings_link');
