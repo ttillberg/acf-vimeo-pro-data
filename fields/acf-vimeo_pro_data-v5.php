@@ -243,7 +243,7 @@ class acf_field_vimeo_pro_data extends acf_field {
             return $value;
         }
 
-        $json = json_decode(stripslashes($value));
+        $json = json_decode($value);
 
         return ($json);
     }
