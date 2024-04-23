@@ -20,6 +20,7 @@ require_once dirname( __FILE__ ) . '/admin-settings.php';
 // check if class already exists
 if( !class_exists('acf_plugin_vimeo_pro_data') ) :
 
+#[AllowDynamicProperties]
 class acf_plugin_vimeo_pro_data {
 
 	/*
